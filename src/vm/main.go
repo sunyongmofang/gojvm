@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"vm/classfile"
 	"vm/classpath"
 )
 
@@ -24,11 +25,35 @@ func startJVM(cmd *Cmd) {
 
 	className := strings.Replace(cmd.class, ".", "/", -1)
 
-	classData, _, err := cp.ReadClass(className)
+	cf := loadClass(className, cp)
+	fmt.Printf(cmd.class)
+	printClassInfo(cf)
+}
 
+func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
+	classData, _, err := cp.ReadClass(className)
 	if err != nil {
-		fmt.Printf("Could not find or load main class %s\n", cmd.class)
-	} else {
-		fmt.Printf("class data:%v\n", classData)
+		panic(err)
+	}
+	cf, err := classfile.Parse(classData)
+	if err != nil {
+		panic(err)
+	}
+	return cf
+}
+
+func printClassInfo(cp *classfile.ClassFile) {
+	fmt.Printf("version: %v.%v\n", cf.MajorVersion(), cf.MinorVersion())
+	fmt.Printf("constants count:%v\n", len(cf.ConstantPool()))
+	fmt.Printf("access flags:0x%x\n", cf.AccessFlags())
+	fmt.Printf("this class:%v\n", cp.SuperClassName())
+	fmt.Printf("interfaces: %v\n", cp.InterfaceNames())
+	fmt.Printf("fields count: %v\n", clen(cp.Fields()))
+	for _, f := range cf.Fields() {
+		fmt.Printf("   %s\n", f.Name())
+	}
+	fmt.Printf("methods count: %v\n", len(cf.Methods()))
+	for _, m := range cf.Methods() {
+		fmt.Printf("   %s\n", m.Name())
 	}
 }

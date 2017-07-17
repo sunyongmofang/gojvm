@@ -1,4 +1,4 @@
-package class_file
+package classfile
 
 import "fmt"
 
@@ -89,7 +89,7 @@ func (self *ClassFile) InterfaceNames() []string {
 	for i, cpIndex := range self.interfaces {
 		interfaceNames[i] = self.constantPool.getClassName(cpIndex)
 	}
-	return interfaceName
+	return interfaceNames
 }
 
 func Parse(classData []byte) (cf *ClassFile, err error) {
