@@ -43,17 +43,17 @@ func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
 }
 
 func printClassInfo(cp *classfile.ClassFile) {
-	fmt.Printf("version: %v.%v\n", cf.MajorVersion(), cf.MinorVersion())
-	fmt.Printf("constants count:%v\n", len(cf.ConstantPool()))
-	fmt.Printf("access flags:0x%x\n", cf.AccessFlags())
+	fmt.Printf("version: %v.%v\n", cp.MajorVersion(), cp.MinorVersion())
+	fmt.Printf("constants count:%v\n", len(cp.ConstantPool()))
+	fmt.Printf("access flags:0x%x\n", cp.AccessFlags())
 	fmt.Printf("this class:%v\n", cp.SuperClassName())
 	fmt.Printf("interfaces: %v\n", cp.InterfaceNames())
-	fmt.Printf("fields count: %v\n", clen(cp.Fields()))
-	for _, f := range cf.Fields() {
+	fmt.Printf("fields count: %v\n", len(cp.Fields()))
+	for _, f := range cp.Fields() {
 		fmt.Printf("   %s\n", f.Name())
 	}
-	fmt.Printf("methods count: %v\n", len(cf.Methods()))
-	for _, m := range cf.Methods() {
+	fmt.Printf("methods count: %v\n", len(cp.Methods()))
+	for _, m := range cp.Methods() {
 		fmt.Printf("   %s\n", m.Name())
 	}
 }
