@@ -22,12 +22,14 @@ func main() {
 func startJVM(cmd *Cmd) {
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
 	className := strings.Replace(cmd.class, ".", "/", -1)
+    //fmt.Println(cmd.XjreOption + "," + cmd.cpOption + "," + className); //test input context
 	cf := loadClass(className, cp)
 	fmt.Println(cmd.class)
 	printClassInfo(cf)
 }
 
 func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
+    //fmt.Println("className:" + className)
 	classData, _, err := cp.ReadClass(className)
 	if err != nil {
 		panic(err)

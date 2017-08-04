@@ -21,9 +21,7 @@ func newEntry(path string) Entry {
 		return newWildcardEntry(path)
 	}
 
-	if strings.HasSuffix(path, ".jar") || strings.HasSuffix(path, ".JAR") ||
-		strings.HasSuffix(path, ".zip") || strings.HasSuffix(path, ".ZIP") {
-
+	if strings.HasSuffix(path, ".jar") || strings.HasSuffix(path, ".JAR") || strings.HasSuffix(path, ".zip") || strings.HasSuffix(path, ".ZIP") {
 		return newZipEntry(path)
 	}
 

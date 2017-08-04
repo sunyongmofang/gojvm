@@ -11,8 +11,9 @@ type Classpath struct {
 	userClasspath Entry
 }
 
-func Parse(jreOption, cpOption string) *Classpath {
+func Parse(jreOption string, cpOption string) *Classpath {
 	cp := &Classpath{}
+    //jre path:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.141-1.b16.el7_3.x86_64/jre
 	cp.parseBootAndExtClasspath(jreOption)
 	cp.parseUserClasspath(cpOption)
 	return cp
